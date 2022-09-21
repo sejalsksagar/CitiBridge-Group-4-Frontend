@@ -1,0 +1,93 @@
+<style>
+    td {
+        padding: 10px;
+      }
+</style>
+<div class="container">
+    <section>
+        <header class="header">
+          <!----  <button type="button" (click)="screenTransactions()" class="blue-button">screen</button> ---->
+          
+          <br>
+          <div class="container">
+            <div class="jumbotron text-center">
+              <h1>Sanctions Screening of Payments Transactions</h1>
+              <p></p>
+            </div>
+            <p></p>
+          </div>
+          
+        </header>
+    </section>
+
+
+    <section class="main">
+        <br>
+        <table align="center">
+            
+            <tr>
+                <td class="td">
+                    <input class="form-control mt-2 mb-2" type="text" [(ngModel)]="searchText1"  (input)="SearchByPayerName()" placeholder="Search by Payer Name" /> 
+                </td>
+               <td>
+                    <input class="form-control mt-2 mb-2" type="text" [(ngModel)]="searchText2"  (input)="SearchByPayeeName()" placeholder="Search by Payee Name" /> 
+               </td>
+               <td>
+                    <input class="form-control mt-2 mb-2" type="text" [(ngModel)]="searchText3"  (input)="SearchByValidate()" placeholder="Search by Validate Status" /> 
+               </td>
+               <td>
+                    <input class="form-control mt-2 mb-2" type="text" [(ngModel)]="searchText4"  (input)="SearchByScreen()" placeholder="Search by Screen Status" /> 
+               </td>
+            </tr>
+            
+        </table>
+        <div align="right">
+            <button type="button" class="btn btn-primary" (click)="screenTransactions()">Screen Transactions</button>
+        </div>
+        
+        <br>
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Transaction Id</th>
+                    <th>Impact Date</th>
+                    <th>Payer Name</th>
+                    <th>Payer Account</th>
+                    <th>Payee Name</th>
+                    <th>Payee Account</th>
+                    <th>Amount</th>
+                    <th>Validate Status</th>
+                    <th>Screen Status</th>
+                </tr>
+            </thead>
+            <tbody  id="myTable">
+             <tr *ngIf="transactions.length==0">
+                <td colspan="10" style="text-align: center"><h5>No transactions to display.</h5></td>
+             </tr>
+             <tr *ngFor="let transaction of transactions">
+                <th>{{transaction.transactionId}}</th>
+                <td>{{transaction.impactDate}}</td>
+                <td>{{transaction.payerName}}</td>
+                <td>{{transaction.payerAccount}}</td>
+                <td>{{transaction.payeeName}}</td>
+                <td>{{transaction.payeeAccount}}</td>
+                <td>{{transaction.amount}}</td>
+                <td>{{transaction.validate}}</td>
+                <td>{{transaction.screen}}</td>
+             </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
